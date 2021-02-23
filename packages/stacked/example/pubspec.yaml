@@ -25,6 +25,8 @@ dependencies:
   cupertino_icons: ^0.1.2
   stacked:
     path: ../
+  stacked_services:
+    path: ../../stacked_services
 
   # dependency injection
   get_it: ^4.0.1
@@ -39,6 +41,7 @@ dev_dependencies:
 
   # dependency injection
   injectable_generator:
+  stacked_generator: ^0.1.1
   build_runner:
 
 # For information on the generic Dart part of this file, see the

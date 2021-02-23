@@ -1,10 +1,87 @@
+## 1.9.1+2
+
+- Fix null error from locator
+
+## 1.9.1+1
+
+- Adds export for `StackedLocator`
+
+## 1.9.1
+
+- Adds `StackedLocator` to remove the apps dependency from GetIt. It's a thin wrapper around the `GetIt` object implementation
+
+## 1.9.0
+
+Big Update! This version of stacked aims to reduce the boiler plate required to setup a stacked application. We introduce the annotation that are used by the stacked_generator to generate the router and locator setup functionality.
+
+## 1.7.7
+
+- Fixes [Multiple Streams ViewModel causing memory overflow](https://github.com/FilledStacks/stacked/issues/190) bug
+
+## 1.7.6
+
+- Adds `fireOnce` properties to the `ViewModelBuilderWidget`
+
+## 1.7.5
+
+- Adds rethrow capability to the `FutureViewModel`
+
+## 1.7.4
+
+- Makes index tracking viewmodel a reactive viewmodel so it can react to services
+
+## 1.7.3+2
+
+- REVERT: Use hascode for hasErrorForObject function instead of value directly
+
+## 1.7.3+1
+
+- Use hascode for hasErrorForObject function instead of value directly
+
+## 1.7.3
+
+- Removes old error handling code for specialty viewmodels
+
+## 1.7.2
+
+- Adds `RxSet` to the reactive list of functionalities.
+
+## 1.7.1+1
+
+- Adds `initialiseSpecialViewModelsOnce` to the readme.
+
+## 1.7.1
+
+- Adds `initialiseSpecialViewModelsOnce` property to set initialise function call to only fire once.
+
+## 1.7.0+1
+
+- Adds more migration notes
+
+## 1.7.0 - [BREAKING CHANGES]
+
+### Migrate from 1.6.1 -> 1.7
+
+- hasError(key) -> error(key) for multiple ViewModel
+
+- Adds `IndexTrackingViewModel` for help with BottomNavBar
+- Adds better error handling for `BaseViewModel`
+
+## 1.6.1+1
+
+- Adds `fireOnModelReadyOnce` to readme
+
+## 1.6.1
+
+- Adds `fireOnModelReadyOnce` to be used together with `disposeViewModel` to ensure a viewmodel that's already been constructed doesn't call onModelReady every time it's shown on screen.
+
 ## 1.6.0+1
 
 - Adds onCancel call for the MultiStreamViewModel
 
 ## 1.6.0
 
-- Adds dispose protection when calling notifyListeners. 
+- Adds dispose protection when calling notifyListeners.
 
 ## 1.5.8
 

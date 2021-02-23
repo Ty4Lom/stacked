@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:injectable/injectable.dart';
 
 class NavigationTransition {
   static const String Fade = 'fade';
@@ -8,18 +7,14 @@ class NavigationTransition {
   static const String LeftToRight = 'lefttoright';
   static const String UpToDown = 'uptodown';
   static const String DownToUp = 'downtoup';
-  static const String Scale = 'scale';
-  static const String Rotate = 'rotate';
-  static const String Size = 'size';
+  static const String Rotate = 'zoom';
   static const String RightToLeftWithFade = 'righttoleftwithfade';
   static const String LeftToRighttWithFade = 'lefttorightwithfade';
-  static const String Cupertino = 'cupertino';
 }
 
 /// Provides a service that can be injected into the ViewModels for navigation.
 ///
 /// Uses the Get library for all navigation requirements
-@lazySingleton
 class NavigationService {
   Map<String, Transition> _transitions = {
     NavigationTransition.Fade: Transition.fade,
@@ -27,20 +22,26 @@ class NavigationService {
     NavigationTransition.LeftToRight: Transition.leftToRight,
     NavigationTransition.UpToDown: Transition.upToDown,
     NavigationTransition.DownToUp: Transition.downToUp,
-    NavigationTransition.Scale: Transition.scale,
-    NavigationTransition.Rotate: Transition.rotate,
-    NavigationTransition.Size: Transition.size,
+    NavigationTransition.Rotate: Transition.zoom,
     NavigationTransition.RightToLeftWithFade: Transition.rightToLeftWithFade,
     NavigationTransition.LeftToRighttWithFade: Transition.leftToRightWithFade,
-    NavigationTransition.Cupertino: Transition.cupertino,
   };
 
-  get navigatorKey {
-    return Get.key;
-  }
+  @Deprecated(
+      'Prefer to use the StackedServices.navigatorKey instead of using this key. This will be removed in the next major version update for stacked.')
+  GlobalKey<NavigatorState> get navigatorKey => Get.key;
+
+  /// Returns the previous route
+  String get previousRoute => Get.previousRoute;
+
+  /// Returns the current route
+  String get currentRoute => Get.currentRoute;
 
   /// Creates and/or returns a new navigator key based on the index passed in
-  nestedNavigationKey(int index) => Get.nestedKey(index);
+  @Deprecated(
+      'Prefer to use the StackedServices.nestedNavigationKey instead of using this property. This will be removed in the next major version update for stacked.')
+  GlobalKey<NavigatorState> nestedNavigationKey(int index) =>
+      Get.nestedKey(index);
 
   /// Allows you to configure the default behaviour for navigation.
   ///
@@ -99,7 +100,7 @@ class NavigationService {
       int id}) {
     return Get.to(page,
         transition: _getTransitionOrDefault(transition),
-        duration: duration ?? Get.defaultDurationTransition,
+        duration: duration ?? Get.defaultTransitionDuration,
         popGesture: popGesture ?? Get.isPopGestureEnable,
         opaque: opaque ?? Get.isOpaqueRouteDefault,
         id: id);
@@ -118,7 +119,7 @@ class NavigationService {
     return Get.off(
       page,
       transition: _getTransitionOrDefault(transition),
-      duration: duration ?? Get.defaultDurationTransition,
+      duration: duration ?? Get.defaultTransitionDuration,
       popGesture: popGesture ?? Get.isPopGestureEnable,
       opaque: opaque ?? Get.isOpaqueRouteDefault,
       id: id,
@@ -126,8 +127,8 @@ class NavigationService {
   }
 
   /// Pops the current scope and indicates if you can pop again
-  bool back({dynamic result}) {
-    Get.back(result: result);
+  bool back({dynamic result, int id}) {
+    Get.back(result: result, id: id);
     return Get.key.currentState.canPop();
   }
 

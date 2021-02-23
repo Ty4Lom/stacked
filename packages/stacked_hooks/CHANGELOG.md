@@ -1,3 +1,19 @@
+## 0.1.3+2
+
+- Update flutter_hooks 0.15.0
+
+## 0.1.3+1
+
+- Update flutter_hooks
+
+## 0.1.3
+
+- Update flutter_hooks and provider
+
+## 0.1.2
+
+- Hook widget has a const constructor
+
 ## 0.1.1+3
 
 - Changelog style updates

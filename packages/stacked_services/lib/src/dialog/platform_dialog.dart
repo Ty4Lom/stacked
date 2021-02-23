@@ -10,6 +10,8 @@ class PlatformButton extends StatelessWidget {
   final String text;
   final Function onPressed;
   final bool isCancelButton;
+  final Color confirmationBtnColor;
+  final Color cancelBtnColor;
 
   const PlatformButton({
     Key key,
@@ -17,17 +19,24 @@ class PlatformButton extends StatelessWidget {
     this.isCancelButton = false,
     @required this.text,
     @required this.onPressed,
+    this.confirmationBtnColor,
+    this.cancelBtnColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     switch (dialogPlatform) {
       case DialogPlatform.Cupertino:
         return CupertinoDialogAction(
-          child: Text(
-            text,
-            style: isCancelButton ? _cancelTextStyle : null,
-          ),
+          child: Text(text,
+              style: isCancelButton
+                  ? cancelBtnColor != null
+                      ? TextStyle(color: cancelBtnColor)
+                      : _cancelTextStyle
+                  : confirmationBtnColor != null
+                      ? TextStyle(color: confirmationBtnColor)
+                      : null),
           onPressed: onPressed,
         );
 
@@ -35,7 +44,13 @@ class PlatformButton extends StatelessWidget {
       default:
         return FlatButton(
           child: Text(text,
-              style: isCancelButton ? _cancelTextStyle : _defaultTextStyle),
+              style: isCancelButton
+                  ? cancelBtnColor != null
+                      ? TextStyle(color: cancelBtnColor)
+                      : _cancelTextStyle
+                  : confirmationBtnColor != null
+                      ? TextStyle(color: confirmationBtnColor)
+                      : null),
           onPressed: onPressed,
         );
     }
@@ -94,24 +109,29 @@ class PlatformDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     switch (dialogPlatform) {
       case DialogPlatform.Cupertino:
-        return CupertinoAlertDialog(
+          return CupertinoAlertDialog(
+            title: title != null ? Text(
+              title,
+            ): null,
+            content: content != null? Text(
+              content,
+            ):null,
+            actions: actions,
+      );
+      case DialogPlatform.Material:
+      default: // TODO: When custom dialog registrations are implemented it'll be shown here
+        return AlertDialog(
+          titleTextStyle: Theme.of(context).dialogTheme.titleTextStyle,
+          contentTextStyle: Theme.of(context).dialogTheme.contentTextStyle,
           title: Text(
             title,
           ),
           content: Text(
             content,
           ),
-          actions: actions,
-        );
-      case DialogPlatform.Material:
-      default: // TODO: When custom dialog registrations are implemented it'll be shown here
-        return AlertDialog(
-          titleTextStyle: Theme.of(context).dialogTheme.titleTextStyle,
-          contentTextStyle: Theme.of(context).dialogTheme.contentTextStyle,
-          title: Text(title),
-          content: Text(content),
           actions: actions,
         );
     }
